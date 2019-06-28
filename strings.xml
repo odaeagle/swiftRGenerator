@@ -1,121 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
 
-    <!-- Common -->
+    <!-- Section1 -->
     <string name="any">Any</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="share">Share</string>
-    <string name="modify">Modify</string>
-    <string name="archive">Archive</string>
-    <string name="apply">Apply</string>
-
-    <!-- Filter -->
-    <string name="clear_all">Clear all</string>
+    <string name="x_and_above">%s and above</string>
+    
+    <!-- Section2 -->
+    <string name="all">ok</string>
     <plurals name="x_results">
         <item quantity="one">%s Result</item>
         <item quantity="other">%s Results</item>
-    </plurals>
-    <string name="type">Type</string>
-    <string name="x_and_above">%s and above</string>
-    <string name="x_and_below">%s and below</string>
-
-    <!-- Entity Lists -->
-    <string name="search_inventory">Search inventory</string>
-    <string name="search_customers">Search customers</string>
-    <string name="search_appointments">Search appointments</string>
-    <string name="search_tasks">Search tasks</string>
-    <string name="search_leads">Search leads</string>
-
-    <!-- Entity Details -->
-    <string name="upcoming_appointment">Upcoming Appointment</string>
-    <string name="appointment_with">Appointment With</string>
-    <string name="interested_customers">Interested Customers</string>
-    <string name="description">Description</string>
-    <string name="inquiry">Inquiry</string>
-    <string name="activity">Activity</string>
-    <string name="notes">Notes</string>
-    <string name="customer">Customer</string>
-    <string name="tags">Tags</string>
-    <string name="all_leads">All Leads</string>
-    <string name="conversations">Conversations</string>
-    <string name="walk_ins">Walk Ins</string>
-    <string name="test_drives">Test Drives</string>
-    <plurals name="view_x_more_appointments">
-        <item quantity="one">View %d more appointment</item>
-        <item quantity="other">View %d appointments</item>
-    </plurals>
-    <plurals name="view_x_more_messages">
-        <item quantity="one">View %d more message</item>
-        <item quantity="other">View %d messages</item>
-    </plurals>
-    <plurals name="vehicles_of_interest">
-        <item quantity="one">Vehicle of interest</item>
-        <item quantity="other">Vehicles of interest</item>
-    </plurals>
-
-    <!-- Inventory -->
-    <string name="vin">VIN</string>
-    <string name="year">Year</string>
-    <string name="make">Make</string>
-    <string name="model">Model</string>
-    <string name="trim">Trim</string>
-    <string name="mileage">Mileage</string>
-    <string name="body_type">Body Type</string>
-    <string name="exterior_color">Exterior Color</string>
-    <string name="interior_color">Interior Color</string>
-    <string name="doors">Doors</string>
-    <string name="passengers">Passengers</string>
-    <string name="exterior_photos">Exterior Photos</string>
-    <string name="interior_photos">Interior Photos</string>
-    <string name="damage_photos">Damage Photos</string>
-    <string name="options">Options</string>
-    <string name="x_percent_done">%s Done</string>
-    <string name="x_in_stock">%s in stock</string>
-
-    <!-- Retail Item -->
-    <string name="list_price">List Price</string>
-    <string name="msrp">MSRP</string>
-    <string name="freight">Freight</string>
-    <string name="cost">Cost</string>
-    <string name="additional_fee">Additional Fee</string>
-
-    <!-- Date Formatters-->
-    <string name="due_today">Due Today</string>
-    <string name="due_in_x">Due in %s</string>
-    <string name="overdue_by_x">Overdue by %s</string>
-
-    <plurals name="x_years">
-        <item quantity="one">%d Year</item>
-        <item quantity="other">%d Years</item>
-    </plurals>
-    <plurals name="x_months">
-        <item quantity="one">%d Month</item>
-        <item quantity="other">%d Months</item>
-    </plurals>
-    <plurals name="x_weeks">
-        <item quantity="one">%d Week</item>
-        <item quantity="other">%d Weeks</item>
-    </plurals>
-    <plurals name="x_days">
-        <item quantity="one">%d day</item>
-        <item quantity="other">%d days</item>
-    </plurals>
-    <plurals name="x_hours">
-        <item quantity="one">%d hour</item>
-        <item quantity="other">%d hours</item>
-    </plurals>
-    <plurals name="x_minutes">
-        <item quantity="one">%d minute</item>
-        <item quantity="other">%d minutes</item>
-    </plurals>
-    <plurals name="x_seconds">
-        <item quantity="one">%d second</item>
-        <item quantity="other">%d seconds</item>
-    </plurals>
-    <plurals name="elapsedDays">
-        <item quantity="one">%d day ago </item>
-        <item quantity="other">%d days ago</item>
     </plurals>
 
 </resources>

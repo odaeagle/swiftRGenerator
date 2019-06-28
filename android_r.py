@@ -12,37 +12,90 @@ class CommentedTreeBuilder(ElementTree.TreeBuilder):
         self.start(ElementTree.Comment, {})
         self.data(data)
         self.end(ElementTree.Comment)
+        
+def clean_name(name: str) -> str:
+    words = name.strip().split('_')
+    words = list(map(lambda x: x[0].upper() + x[1:], words))
+    words[0] = words[0][0].lower() + words[0][1:]
+    return ''.join(words)
+
+class Entry:
+    
+    key: str
+    value: str
+    has_arg: bool
+    args: [(str, str)]
+    
+    def __init__(self, key: str, value: str):
+        self.key = key
+        self.value = value
+        self.args = []
+        self._process()
+        
+    def _process(self):
+        if '%' in self.value:
+            # with arg
+            self.has_arg = True
+            index = 0
+            arg_count = 0
+            while True:
+                found = self.value.find('%', index)
+                if found == -1:
+                    break
+                arg_count += 1
+                placeholder = self.value[index: index + 2]
+                if placeholder == '%d':
+                    self.args.append(('arg' + str(arg_count),\
+                                      'Int'))
+                elif placeholder == '%s':
+                    self.value = self.value[:index] + '%@' + self.value[index + 2:]
+                    self.args.append(('arg' + str(arg_count),\
+                                      'String'))
+                elif placeholder == '%f':
+                    self.args.append(('arg' + str(arg_count),\
+                                      'Float'))
+                index = found + 1
+                
+        else:
+            # without arg
+            self.has_arg = False
+        
+    def __repr__(self):
+        return '<{}, {} {}>'.format(self.key, self.value, self.args)
+    
 
 # Code Generation Template
-template = """
+template_no_arg = """
     static var {} = {{
+        return EDLocalizedString("{}", comment: "{}")
+    }}
+    """
+template_with_arg = """
+    static func {}({}) {{
         return EDLocalizedString("{}", comment: "{}")
     }}
     """
 
 def process(file: str):
+    D = {}
     parser = ET.XMLParser(target = CommentedTreeBuilder())
     tree = ET.parse('strings.xml', parser=parser)
     root = tree.getroot()
-    
-    f = open('ios.strings', 'w')
-    f2 = open('R.swift', 'w')
-    
-    f2.write('class R {\n')
-    
+
+    curr_section = None
     for child in root:
-        print(child.tag)
+        print("TAG", child.tag)
         if callable(child.tag):
-            # it's a comment
+            section_name = clean_name(child.text)
+            curr_section = section_name
+            D[curr_section] = []
             continue
         if child.tag == 'string':
             key = child.attrib['name']
             value = child.text
-            f.write('"{}" = "{}";\n'.format(key, value))
-            f2.write(template.format(key, key, value))
-    f.close()
-    
-    f2.write('}\n')
-    f2.close()    
+            entry = Entry(key, value)
+            D[curr_section].append(entry)
+            
+    print(D)
 
 process(INPUT_NAME)
