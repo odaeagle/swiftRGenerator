@@ -3,6 +3,7 @@ from xml.etree import ElementTree
 
 INPUT_NAME = 'strings.xml'
 
+
 # Custom builder so parser will not ignore all comments
 class CommentedTreeBuilder(ElementTree.TreeBuilder):
     def __init__(self, *args, **kwargs):
@@ -12,12 +13,19 @@ class CommentedTreeBuilder(ElementTree.TreeBuilder):
         self.start(ElementTree.Comment, {})
         self.data(data)
         self.end(ElementTree.Comment)
-        
+
+
 def clean_name(name: str) -> str:
     words = name.strip().split('_')
     words = list(map(lambda x: x[0].upper() + x[1:], words))
     words[0] = words[0][0].lower() + words[0][1:]
     return ''.join(words)
+
+
+class PluralsEntry:
+
+    key: str
+
 
 class Entry:
     
@@ -76,9 +84,10 @@ template_with_arg = """
     }}
     """
 
+
 def process(file: str):
-    D = {}
-    parser = ET.XMLParser(target = CommentedTreeBuilder())
+    result = {}
+    parser = ET.XMLParser(target=CommentedTreeBuilder())
     tree = ET.parse('strings.xml', parser=parser)
     root = tree.getroot()
 
@@ -88,14 +97,21 @@ def process(file: str):
         if callable(child.tag):
             section_name = clean_name(child.text)
             curr_section = section_name
-            D[curr_section] = []
-            continue
-        if child.tag == 'string':
+            result[curr_section] = []
+        elif child.tag == 'string':
             key = child.attrib['name']
             value = child.text
             entry = Entry(key, value)
-            D[curr_section].append(entry)
-            
-    print(D)
+            result[curr_section].append(entry)
+        elif child.tag == 'plurals':
+            print(dir(child))
+            for element in child:
+                key = element.attrib['quantity']
+                value = element.text
+                print(key, value)
+            print(list(child))
+    print(result)
 
-process(INPUT_NAME)
+
+if __name__ == '__main__':
+    process(INPUT_NAME)
