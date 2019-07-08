@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 from xml.etree import ElementTree
+from typing import Dict, List
 
 INPUT_NAME = 'strings.xml'
 
@@ -23,12 +24,26 @@ def clean_name(name: str) -> str:
 
 
 class PluralsEntry:
-
     key: str
+    quantities: List['Entry']
+    
+    def __init__(self, key: str, quantities: Dict[str, str]):
+        self.key = key
+        self.quantities = []
+        for key in quantities:
+            entry = Entry(key, quantities[key])
+            self.quantities.append(entry)
+        self._process()
+    
+    def _process(self):
+        for key in self.quantities:
+            print(key)
+            
+    def __repr__(self):
+        return '<{}, {}>'.format(self.key, self.quantities)            
 
 
 class Entry:
-    
     key: str
     value: str
     has_arg: bool
@@ -93,7 +108,6 @@ def process(file: str):
 
     curr_section = None
     for child in root:
-        print("TAG", child.tag)
         if callable(child.tag):
             section_name = clean_name(child.text)
             curr_section = section_name
@@ -104,12 +118,14 @@ def process(file: str):
             entry = Entry(key, value)
             result[curr_section].append(entry)
         elif child.tag == 'plurals':
-            print(dir(child))
+            key = child.attrib['name']
+            quantities = {}
             for element in child:
                 key = element.attrib['quantity']
                 value = element.text
-                print(key, value)
-            print(list(child))
+                quantities[key] = value
+            entry = PluralsEntry(key, quantities)
+            result[curr_section].append(entry)
     print(result)
 
 
