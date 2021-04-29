@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 from xml.etree import ElementTree
 from typing import Dict, List
+import re
 
 INPUT_NAME = 'strings.xml'
 
@@ -85,6 +86,7 @@ class Entry:
         
     def __repr__(self):
         return '<{}, {} {}>'.format(self.key, self.value, self.args)
+        
     
 
 # Code Generation Template
@@ -126,8 +128,19 @@ def process(file: str):
                 quantities[key] = value
             entry = PluralsEntry(key, quantities)
             result[curr_section].append(entry)
-    print(result)
+            
+    for section in result:
+        for entry in result[section]:
+            print(section, entry)
+    
 
 
 if __name__ == '__main__':
     process(INPUT_NAME)
+    
+    line = "it's ok %2d %2s %.2f"
+    pattern = "^%d$"
+    r = re.match(line, pattern)
+    print(r)
+    
+
